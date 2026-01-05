@@ -1,0 +1,4 @@
+,id,name,pos,shoots,age,is_alive,height,weight,career length,is_active,has_hall_of_fame,count_allstar,stat_games,stat_points,stat_total_rebounds,stat_assists,stat_field_goal_pct,stat_three_point_field_goal_pct,stat_effective_field_goal_pct,stat_free_throw_pct,stat_efficiency_rating,stat_win_shares
+0,b/bryanko01,Kobe Bryant,Shooting Guard and Small Forward,Right,41.45479452054794,False,198,96,20,False,True,18,1346.0,25.0,5.2,4.7,44.7,32.9,83.7,48.2,22.9,172.7
+1,a/abdulka01,Kareem Abdul-Jabbar,Center,Right,78.78082191780823,True,218,102,20,False,True,19,1560.0,24.6,11.2,3.6,55.9,5.6,72.1,55.9,24.6,273.4
+2,g/gilgesh01,Shai Gilgeous-Alexander,Point Guard and Shooting Guard,Right,27.506849315068493,True,198,88,7,True,False,3,497.0,25.0,4.8,5.2,50.5,36.1,86.4,54.5,24.0,68.9
