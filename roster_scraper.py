@@ -5,7 +5,7 @@ import time
 
 base_url = 'https://www.basketball-reference.com'
 teams_url = f'{base_url}/teams/'
-
+output_file = "roster_data.csv"
 headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
@@ -65,7 +65,7 @@ def get_roster(client, season_href):
             player_info = row.find('td', {'data-stat': 'player'}).find('a')
             players.append(
                 {
-                    'id' : player_info['href'].split('/')[-1].split('.')[0],
+                    'id' : player_info['href'].split('/players/')[1].replace('.html', ''),
                     'name': player_info.text,
                     'position': row.find('td', {'data-stat':'pos'}).text
                     
@@ -74,41 +74,48 @@ def get_roster(client, season_href):
     return players
     
     
-    
-data = []   
-with httpx.Client(http2=True, headers=headers) as client:
-    try:
-        teams = get_teams(client)
-        time.sleep(3.1)
-        
-        for team in teams:
-            print(f'Scraping data for team: {team['name']}')
-            seasons = get_team_data_based_on_seasons(client, team['href'], team['id'])
-            time.sleep(3.1)
-            
-            for season in seasons:
-                roster = get_roster(client, season['href'])
-                
-                for player in roster:
-                    player.update({
-                            'team_name': team['name'],
-                            'season': season['season']
-                        })
-                    data.append(player)
-
-                time.sleep(3.1)  
-                  
-    except Exception as e:
-        print(f'Error: {e}')
-    
-    finally:
-        df = pd.DataFrame(data)
-        df = df.rename(columns={
-                                'name': 'player_name',
-                                'id': 'player_id',
-                                'position': 'player_position'
-                        })
-
+def save_to_csv(data, filename):
+    df = pd.DataFrame(data)
+    df = df.rename(columns={
+        'name': 'player_name',
+        'id': 'player_id',
+        'position': 'player_position'
+    })
     column_order = ['team_name', 'season', 'player_name', 'player_id', 'player_position']
     df = df[column_order]
-    df.to_csv("roster_tables_data.csv", index=False)    
+    
+    df.to_csv(filename, index=False, encoding='utf-8')
+    print(f'{filename} successfully saved!')
+    
+def main():
+    data = []   
+    with httpx.Client(http2=True, headers=headers) as client:
+        try:
+            teams = get_teams(client)
+            time.sleep(3.1)
+            
+            for team in teams:
+                print(f'Scraping data for team: {team['name']}')
+                seasons = get_team_data_based_on_seasons(client, team['href'], team['id'])
+                time.sleep(3.1)
+                
+                for season in seasons:
+                    roster = get_roster(client, season['href'])
+                    
+                    for player in roster:
+                        player.update({
+                                'team_name': team['name'],
+                                'season': season['season']
+                            })
+                        data.append(player)
+
+                    time.sleep(3.1)  
+                    
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        
+        finally:
+            save_to_csv(data, output_file)
+
+if __name__ == "__main__":
+    main()

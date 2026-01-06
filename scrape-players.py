@@ -104,7 +104,6 @@ class PlayerScraper():
 
     def _process_player_name(self, tree):
         try:
-            # print(tree.xpath(self.xpaths['name'])[0].text_content().strip())
             return tree.xpath(self.xpaths['name'])[0].text_content().strip()
         except Exception as e:
             print(f'could not retrieve player name - error : {e}')
