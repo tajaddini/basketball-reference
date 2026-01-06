@@ -7,7 +7,7 @@ from selenium.webdriver.firefox.options import Options
 
 url = 'https://www.basketball-reference.com/awards/mvp.html'
 output_file = "mvp_winners.csv"
-csv_fields = ['season_id', 'player_id']
+csv_fields = ['season', 'player_id']
 
 def init_driver():
     options = Options()
@@ -33,9 +33,10 @@ def parse_html_to_records(html_content):
         column_regex = r'<td.*?</td>'
         columns = re.findall(column_regex, row)
         try:
-            season_id = re.findall(r'(?<=a href=\"/leagues/).+?(?=.html)', columns[0])[0]
+            season_th = re.findall(r'<th[^>]*data-stat="season".*?</th>', row, re.DOTALL)[0]
+            season = re.findall(r'<a[^>]*>(\d{4}-\d{2})</a>', season_th)[0]
             player_id = re.findall(r'(?<=a href=\"/players/./).+?(?=.html)', columns[1])[0]
-            records.append([season_id, player_id])
+            records.append([season, player_id])
         except Exception as e:
             print(f"Error extracting record data: {e}")
             return None                
