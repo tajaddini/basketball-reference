@@ -66,7 +66,6 @@ def get_roster(client, season_href):
             players.append(
                 {
                     'id' : player_info['href'].split('/players/')[1].replace('.html', ''),
-                    'name': player_info.text,
                     'position': row.find('td', {'data-stat':'pos'}).text
                     
                 }
@@ -77,11 +76,10 @@ def get_roster(client, season_href):
 def save_to_csv(data, filename):
     df = pd.DataFrame(data)
     df = df.rename(columns={
-        'name': 'player_name',
         'id': 'player_id',
         'position': 'player_position'
     })
-    column_order = ['team_name', 'season', 'player_name', 'player_id', 'player_position']
+    column_order = ['team_name', 'season', 'player_id', 'player_position']
     df = df[column_order]
     
     df.to_csv(filename, index=False, encoding='utf-8')
