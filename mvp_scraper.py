@@ -1,5 +1,5 @@
 import re
-import csv
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
@@ -42,10 +42,9 @@ def parse_html_to_records(html_content):
     return records
 
 def save_to_csv(filename, fields, data):
-    with open(filename, 'w') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(fields)
-        writer.writerows(data)
+    df = pd.DataFrame(data, columns=fields)
+    df.to_csv(filename, index=False, encoding='utf-8')
+    print(f'{filename} successfully saved!')
 
 def main():
     driver = init_driver()  
@@ -53,6 +52,10 @@ def main():
         html = scrape_mvp_table(driver, url)
         records = parse_html_to_records(html)
         save_to_csv(output_file, csv_fields, records)
+        
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        
     finally:
         driver.quit()
 
