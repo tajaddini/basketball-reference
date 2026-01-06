@@ -7,7 +7,7 @@ from selenium.webdriver.firefox.options import Options
 
 url = 'https://www.basketball-reference.com/awards/mvp.html'
 output_file = "mvp_winners.csv"
-csv_fields = ['season', 'player_id', 'age']
+csv_fields = ['season', 'player_id', 'age', 'Tm','G','MP','PTS','TRB','AST','STL','BLK','FG%','3P%','FT%','WS','WS/48']
 
 def init_driver():
     options = Options()
@@ -31,13 +31,16 @@ def parse_html_to_records(html_content):
     records = []
     for row in rows:
         column_regex = r'<td.*?</td>'
+        column_names_regex = r'(?<=data-stat=\")\w+?(?=\")'
         columns = re.findall(column_regex, row)
+        column_names = re.findall(column_names_regex, row)
         try:
-            season_th = re.findall(r'<th[^>]*data-stat="season".*?</th>', row, re.DOTALL)[0]
-            season = re.findall(r'<a[^>]*>(\d{4}-\d{2})</a>', season_th)[0]
+            season = re.findall(r'<a[^>]*>(\d{4}-\d{2})</a>', row)[0]
             player_id = re.findall(r'(?<=a href=\"/players/).+?(?=.html)', columns[1])[0]
-            age = re.findall(r'\d+(?=</td>)', columns[3])[0]
-            records.append([season, player_id, age])
+            age = re.findall(r'(\d*\.?\d+)?(?=</td>)', columns[3])[0]
+            Tm = re.findall(r'\w+?(?=</a></td>)', columns[4])[0]
+            other_numeric_values = [re.findall(r'(\d*\.?\d+)?(?=</td>)', col)[0] for col in columns[5:]]
+            records.append([season, player_id, age, Tm, *other_numeric_values])
         except Exception as e:
             print(f"Error extracting record data: {e}")
             return None                
