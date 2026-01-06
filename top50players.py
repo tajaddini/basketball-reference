@@ -24,7 +24,7 @@ for year in years:
 
         player_href = player.get_attribute("href")
         x = re.search(
-            r'/players/[a-z]/([^/]+)\.html', player_href)
+            r'/players/([a-z]/[^/]+)\.html', player_href)
         player_id = x.group(1)
         player_age = row.find_element(
             By.CSS_SELECTOR, "td[data-stat='age']").text
@@ -35,11 +35,11 @@ for year in years:
         points = row.find_element(
             By.CSS_SELECTOR, "td[data-stat='pts']").text
 
-        players_info = {'year': f'{int(year) - 1}-{year}',
+        players_info = {'season': f'{int(year) - 1}-{year}',
                         'rank': rank,
                         'player_id': player_id,
-                        'player_age': player_age,
-                        'player_team': player_team,
+                        'won_at_age': player_age,
+                        'team_name': player_team,
                         'player_position': player_position,
                         'points': points}
         if int(rank) <= 50:
@@ -49,4 +49,4 @@ for year in years:
 
 driver.quit()
 top_50_players_table = pd.DataFrame(all_players_info)
-top_50_players_table.to_csv("top50players", encoding='utf-8-sig', index=False)
+top_50_players_table.to_csv("top50players.csv", encoding='utf-8-sig')
