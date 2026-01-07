@@ -42,7 +42,7 @@ class PlayerScraper():
             'is_alive',
             'height',
             'weight',
-            'career length',
+            'career_length',
             'is_active',
             'has_hall_of_fame',
             'count_allstar',
@@ -322,8 +322,8 @@ class PlayerScraper():
     
     def save(self, output='csv'):
         if output == 'csv':
-            self.df_players.to_csv('./scraped/players.csv')
-            self.df_salaries.to_csv('./scraped/salaries.csv')
+            self.df_players.to_csv('./scraped/players.csv', index=False)
+            self.df_salaries.to_csv('./scraped/salaries.csv', index=False)
             fails = ''.join('f{x}\n' for x in self.failures)
             with open('./failures.txt', encoding='utf-8', mode='w') as f:
                 f.write(fails)
