@@ -87,7 +87,7 @@ try:
                     'player_age': to_int(safe_get('td[data-stat="age"]')),
                     'team': safe_get('td[data-stat="team_id"]'),
                     'games': to_int(safe_get('td[data-stat="g"]')),
-                    'minute_per_game': to_float(safe_get('td[data-stat="mp_per_g"]')),
+                    'minutes_per_game': to_float(safe_get('td[data-stat="mp_per_g"]')),
                     'points_per_game': to_float(safe_get('td[data-stat="pts_per_g"]')),
                     'total_rebounds_per_game': to_float(safe_get('td[data-stat="trb_per_g"]')),
                     'assists_per_game': to_float(safe_get('td[data-stat="ast_per_g"]')),
