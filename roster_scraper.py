@@ -5,7 +5,7 @@ import time
 
 base_url = 'https://www.basketball-reference.com'
 teams_url = f'{base_url}/teams/'
-output_file = "roster_data.csv"
+output_file = "./scraped/roster_data.csv"
 headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",

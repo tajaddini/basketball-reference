@@ -127,7 +127,7 @@ class PlayerScraper():
         except Exception as e:
             print(f'could not retrieve player position, shoots - error : {e}')
 
-    def _process_player_age(self, tree):
+    def _process_player_age(self, tree):  
         try:
             birthday = tree.xpath(self.xpaths['birthday'])[0].get('data-birth')
             death = tree.xpath(self.xpaths['death'])
@@ -322,14 +322,14 @@ class PlayerScraper():
     
     def save(self, output='csv'):
         if output == 'csv':
-            self.df_players.to_csv('./players.csv')
-            self.df_salaries.to_csv('./salaries.csv')
+            self.df_players.to_csv('./scraped/players.csv')
+            self.df_salaries.to_csv('./scraped/salaries.csv')
             fails = ''.join('f{x}\n' for x in self.failures)
             with open('./failures.txt', encoding='utf-8', mode='w') as f:
                 f.write(fails)
         elif output == 'excel':
-            self.df_players.to_excel('./players.xlsx')
-            self.df_salaries.to_excel('./salaries.xlsx')
+            self.df_players.to_excel('./scraped/players.xlsx')
+            self.df_salaries.to_excel('./scraped/salaries.xlsx')
         else:
             print('bad output type')
     

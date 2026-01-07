@@ -6,7 +6,7 @@ from selenium.webdriver.firefox.options import Options
 
 
 url = 'https://www.basketball-reference.com/awards/mvp.html'
-output_file = "mvp_winners.csv"
+output_file = "./scraped/mvp_winners.csv"
 csv_fields = ['season', 'player_id', 'age', 'Tm','G','MP','PTS','TRB','AST','STL','BLK','FG%','3P%','FT%','WS','WS/48']
 
 def init_driver():

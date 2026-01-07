@@ -7,6 +7,8 @@ import pandas as pd
 import time
 
 print("Start :))")
+url = 'https://www.basketball-reference.com/awards/dpoy.html'
+output_file = "./scraped/dpoy_winners.csv"
 
 options = webdriver.ChromeOptions()
 options.add_argument('--no-sandbox')
