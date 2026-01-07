@@ -7,9 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import time
 import os
-import sys
 
-sys.stdout.reconfigure(encoding='utf-8')
 print("Start :))")
 
 options = webdriver.ChromeOptions()
