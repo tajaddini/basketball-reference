@@ -15,16 +15,7 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--disable-blink-features=AutomationControlled')
 options.add_argument('--window-size=1920,1080')
-options.add_argument('--disable-gpu')
-options.add_argument('--disable-software-rasterizer')
-options.add_argument('--log-level=3')
 options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
-options.page_load_strategy = 'none'
-
-os.environ['WDM_LOG'] = '0'
-
-driver = None
 
 def to_float(value):
     if not value or value == '':
@@ -131,7 +122,7 @@ try:
             max_length = max(len(str(cell.value)) if cell.value else 0 for cell in col)
             worksheet.column_dimensions[col[0].column_letter].width = min(max_length + 2, 30)
 
-        float_columns = ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S']
+        float_columns = ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'] 
         for col_letter in float_columns:
             for row_num in range(2, len(data) + 2):
                 cell = worksheet[f'{col_letter}{row_num}']
@@ -146,7 +137,7 @@ except Exception as e:
 finally:
     if driver:
         try:
-            print("Done :) ")
+            print("Done :)")
             driver.quit()
         except:
             pass
