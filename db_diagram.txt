@@ -1,0 +1,107 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table players {
+  player_id varchar unique pk
+  name varchar
+  pos varchar
+  shoots varchar
+  age float
+  is_alive bool
+  height float
+  weight float
+  career_length int
+  is_active bool
+  has_hall_of_fame bool
+  count_allstar int
+  stat_games int
+  stat_points int
+  stat_total_rebounds int
+  stat_assists int
+  stat_field_goal_pct float
+  stat_three_point_field_goal_pct float
+  stat_effective_field_goal_pct float
+  stat_free_throw_pct float
+  stat_efficiency_rating float
+  stat_win_share float
+}
+
+Table kpis {
+  id int pk
+  player_id varchar
+  season varchar
+  kpi_1 float
+  kpi_2 float
+}
+
+Table salaries {
+  id int [primary key]
+  player_id varchar
+  season varchar
+  salary int
+}
+
+Table roster_data {
+  id int [primary key]
+  player_id varchar
+  team_name varchar
+  season varchar
+  player_position varchar
+}
+
+// Table mvp_winners {
+//   id int [primary key]
+//   player_id varchar
+//   season varchar
+//   player_age int  // new
+// }
+// Ref: mvp_winners.player_id > players.player_id
+
+Table awards {
+  id int pk
+  award_type varchar
+  player_id varchar
+  season varchar
+  player_age int
+  team varchar
+  games int 
+  minutes_per_game float
+  points_per_game float
+  total_rebounds_per_game float
+  assists_per_game float
+  steals_per_game float
+  blocks_per_game float
+  pct_field_goals float
+  pct_threeP_field_goals float
+  pct_ft_field_goals float
+  win_shares float
+  win_shares_48 float
+}
+
+Table top_50 {
+  id int pk
+  player_id varchar
+  won_at_age int
+  season varchar
+  rank int
+  team varchar
+  player_position varchar
+  points int
+}
+
+// Table dpoy_winners {
+//   id int pk
+//   player_id varchar
+//   season varchar
+//   league varchar
+//   team varchar
+//   stl float
+//   blk float
+// }
+// Ref: dpoy_winners.player_id > players.player_id
+
+Ref: salaries.player_id > players.player_id
+Ref: roster_data.player_id > players.player_id
+Ref: top_50.player_id > players.player_id
+Ref: kpis.player_id > players.player_id
+Ref: awards.player_id > players.player_id
