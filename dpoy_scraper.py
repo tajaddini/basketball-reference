@@ -43,7 +43,6 @@ try:
     driver.get('https://www.basketball-reference.com/awards/dpoy.html')
 
     wait = WebDriverWait(driver, 30)
-    time.sleep(3)
 
     data = []
     rows = driver.find_elements(By.CSS_SELECTOR, "table#dpoy_NBA tbody tr")
@@ -60,9 +59,6 @@ try:
             season = season_elem[0].text.strip()
             if not season or season == 'Season':
                 continue
-
-            player_id = ""
-            player_name = ""
 
             player_link_elem = row.find_elements(By.CSS_SELECTOR, 'td[data-stat="player"] a')
             if player_link_elem:
@@ -105,9 +101,6 @@ try:
         except:
             continue
 
-    if not data:
-        raise Exception("no data")
-
     df = pd.DataFrame(data)
     output_file = 'basketball_dpoy.xlsx'
 
@@ -133,8 +126,4 @@ except Exception as e:
 
 finally:
     if driver:
-        try:
             print("Done :)")
-            driver.quit()
-        except:
-            pass
