@@ -148,7 +148,7 @@ except Exception as e:
 finally:
     if driver:
         try:
-            print("Done horaaaa")
+            print("Done :) ")
             driver.quit()
         except:
             pass
