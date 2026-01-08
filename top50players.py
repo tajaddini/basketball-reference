@@ -35,13 +35,15 @@ for year in years:
         points = row.find_element(
             By.CSS_SELECTOR, "td[data-stat='pts']").text
 
-        players_info = {'season': f'{int(year) - 1}-{year}',
-                        'rank': rank,
-                        'player_id': player_id,
-                        'won_at_age': player_age,
-                        'team_name': player_team,
-                        'player_position': player_position,
-                        'points': points}
+        players_info = {
+            'player_id': player_id,
+            'won_at_age': player_age,
+            'season': f'{int(year) - 1}-{year}',
+            'rank': rank,
+            'team': player_team,
+            'player_position': player_position,
+            'points': points
+        }
         if int(rank) <= 50:
             all_players_info.append(players_info)
         else:
