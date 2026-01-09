@@ -50,5 +50,6 @@ for year in years:
             break
 
 driver.quit()
-top_50_players_table = pd.DataFrame(all_players_info)
-top_50_players_table.to_csv("./scraped/top50players.csv", encoding='utf-8-sig')
+player_evaluations_table = pd.DataFrame(all_players_info)
+player_evaluations_table.to_csv(
+    "./scraped/player_evaluations.csv", encoding='utf-8-sig', index=False)
