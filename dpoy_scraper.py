@@ -15,7 +15,9 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--disable-blink-features=AutomationControlled')
 options.add_argument('--window-size=1920,1080')
-options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
+options.add_argument(
+    'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
+
 
 def to_float(value):
     if not value or value == '':
@@ -27,6 +29,7 @@ def to_float(value):
     except:
         return None
 
+
 def to_int(value):
     if not value or value == '':
         return None
@@ -34,6 +37,7 @@ def to_int(value):
         return int(value)
     except:
         return None
+
 
 try:
     driver = webdriver.Chrome(
@@ -54,7 +58,8 @@ try:
             if 'thead' in str(row.get_attribute('class')):
                 continue
 
-            season_elem = row.find_elements(By.CSS_SELECTOR, 'th[data-stat="season"]')
+            season_elem = row.find_elements(
+                By.CSS_SELECTOR, 'th[data-stat="season"]')
             if not season_elem:
                 continue
 
@@ -62,14 +67,16 @@ try:
             if not season or season == 'Season':
                 continue
 
-            player_link_elem = row.find_elements(By.CSS_SELECTOR, 'td[data-stat="player"] a')
+            player_link_elem = row.find_elements(
+                By.CSS_SELECTOR, 'td[data-stat="player"] a')
             if player_link_elem:
                 player_name = player_link_elem[0].text.strip()
                 href = player_link_elem[0].get_attribute('href')
                 if href and '/players/' in href:
                     player_id = href.split('/players/')[1].replace('.html', '')
             else:
-                player_elem = row.find_elements(By.CSS_SELECTOR, 'td[data-stat="player"]')
+                player_elem = row.find_elements(
+                    By.CSS_SELECTOR, 'td[data-stat="player"]')
                 if player_elem:
                     player_name = player_elem[0].text.strip()
 
@@ -104,17 +111,19 @@ try:
             continue
 
     df = pd.DataFrame(data)
-    output_file = 'basketball_dpoy.xlsx'
+    output_file = './scraped/basketball_dpoy.xlsx'
 
     with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
         df.to_excel(writer, index=False, sheet_name='dpoy')
         worksheet = writer.sheets['dpoy']
 
         for col in worksheet.columns:
-            max_length = max(len(str(cell.value)) if cell.value else 0 for cell in col)
-            worksheet.column_dimensions[col[0].column_letter].width = min(max_length + 2, 30)
+            max_length = max(len(str(cell.value))
+                             if cell.value else 0 for cell in col)
+            worksheet.column_dimensions[col[0].column_letter].width = min(
+                max_length + 2, 30)
 
-        float_columns = ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'] 
+        float_columns = ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S']
         for col_letter in float_columns:
             for row_num in range(2, len(data) + 2):
                 cell = worksheet[f'{col_letter}{row_num}']
@@ -128,4 +137,4 @@ except Exception as e:
 
 finally:
     if driver:
-            print("Done :)")
+        print("Done :)")

@@ -1,4 +1,4 @@
-season,player_id,age,Tm,G,MP,PTS,TRB,AST,STL,BLK,FG%,3P%,FT%,WS,WS/48
+season,player_id,player_age,team,games,minutes_per_game,points_per_game,total_rebounds_per_game,assists_per_game,steals_per_game,blocks_per_game,pct_field_goals,pct_threeP_field_goals,pct_ft_field_goals,win_shares,win_shares_48
 2024-25,g/gilgesh01,26,OKC,76,34.2,32.7,5.0,6.4,1.7,1.0,.519,.375,.898,16.7,.309
 2023-24,j/jokicni01,28,DEN,79,34.6,26.4,12.4,9.0,1.4,0.9,.583,.359,.817,17.0,.299
 2022-23,e/embiijo01,28,PHI,66,34.6,33.1,10.2,4.2,1.0,1.7,.548,.330,.857,12.3,.259
