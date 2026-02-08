@@ -59,6 +59,7 @@ class RosterData(Base):
     season = Column(String(50))
     player_position = Column(String(50))
     player = relationship('Player', back_populates='roster_datas')
+    champions = relationship('Champion', back_populates='roster_data')
 
 
 class PlayerEvaluation(Base):
@@ -99,6 +100,16 @@ class Award(Base):
     player = relationship('Player', back_populates='awards')
 
 
+class Champion(Base):
+    __tablename__ = "champions"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    season = Column(String(50))
+    team = Column(String(50))
+    team_id = Column(String(50))
+    roster_data = relationship('RosterData', back_populates='champions')
+
+
 Base.metadata.create_all(engine)
 
 df1 = pd.read_csv("scraped/players.csv")
@@ -115,5 +126,7 @@ df6 = pd.read_csv("scraped/mvp_winners.csv")
 df6["award_type"] = "MVP"
 df_awards = pd.concat([df5, df6])
 df_awards.to_sql("awards", con=engine, if_exists="replace", index=False)
+df7 = pd.read_csv("scraped/champions.csv")
+df7.to_sql("champions", con=engine, if_exists="replace", index=False)
 
 session = Session(engine)
